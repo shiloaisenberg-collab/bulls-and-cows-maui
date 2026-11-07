@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BullsAndCowsApp.Views.MainPage"
+             BackgroundColor="White">
+
+    <!-- Colors taken from the design:
+         panel #FFF2CC, yellow #FFE699, orange #F4B183, blue #4472C4, border #1F3864 -->
+
+    <!-- The yellow panel, centered on the page (size from the design) -->
+    <Border BackgroundColor="#FFF2CC"
+            Stroke="#1F3864"
+            StrokeThickness="1"
+            WidthRequest="335"
+            HeightRequest="434"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+        <Grid RowDefinitions="Auto,Auto,*,Auto,Auto,1.5*,Auto, Auto">
+
+            <!-- Row 0: title -->
+            <Border Grid.Row="0"
+                    BackgroundColor="#FFE699"
+                    Stroke="#1F3864"
+                    WidthRequest="220"
+                    HeightRequest="49"
+                    Margin="0,6,0,0"
+                    HorizontalOptions="Center">
+                <Label Text="Bulls and cows"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <!-- Row 1: New game button (same width as the title) -->
+            <Button Grid.Row="1"
+                    Text="New game"
+                    Command="{Binding NewGameCommand}"
+                    BackgroundColor="#FFE699"
+                    TextColor="Black"
+                    BorderColor="#1F3864"
+                    BorderWidth="1"
+                    CornerRadius="10"
+                    WidthRequest="220"
+                    HeightRequest="49"
+                    HorizontalOptions="Center" />
+
+            <!-- Row 3: attempt number | guess box | submit button -->
+            <Grid Grid.Row="3"
+                  ColumnDefinitions="63,*,68"
+                  VerticalOptions="Start">
+
+                <!-- Orange box on the left: number of attempts -->
+                <Border Grid.Column="0"
+                        BackgroundColor="#F4B183"
+                        Stroke="#1F3864"
+                        StrokeShape="RoundRectangle 8"
+                        HeightRequest="29"
+                        VerticalOptions="Start">
+                    <Label Text="{Binding AttemptCount}"
+                           TextColor="Black"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Blue box in the middle: where the player types the guess -->
+                <Border Grid.Column="1"
+                        BackgroundColor="#4472C4"
+                        Stroke="#1F3864"
+                        StrokeShape="RoundRectangle 10"
+                        HeightRequest="49">
+                    <Entry Text="{Binding GuessText}"
+                           IsEnabled="{Binding CanGuess}"
+                           ReturnCommand="{Binding SubmitCommand}"
+                           Keyboard="Numeric"
+                           TextColor="Black"
+                           HorizontalTextAlignment="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Orange button on the right: submit the guess -->
+                <Button Grid.Column="2"
+                        Text="Submit"
+                        Command="{Binding SubmitCommand}"
+                        IsEnabled="{Binding CanGuess}"
+                        BackgroundColor="#F4B183"
+                        TextColor="Black"
+                        BorderColor="#1F3864"
+                        BorderWidth="1"
+                        CornerRadius="0"
+                        Padding="0"
+                        HeightRequest="29"
+                        VerticalOptions="Start" />
+            </Grid>
+
+            <!-- Row 4: result of the last guess (shown only when there is one) -->
+            <Border Grid.Row="4"
+                    IsVisible="{Binding HasGuessStatus}"
+                    BackgroundColor="#4472C4"
+                    Stroke="#1F3864"
+                    StrokeShape="RoundRectangle 10"
+                    WidthRequest="205"
+                    HeightRequest="49"
+                    Margin="0,37,0,0"
+                    HorizontalOptions="Center">
+                <Label Text="{Binding GuessStatusText}"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <!-- Row 6: error message at the bottom (shown only when there is an error) -->
+            <Border Grid.Row="6"
+                    IsVisible="{Binding HasError}"
+                    BackgroundColor="#4472C4"
+                    Stroke="#1F3864"
+                    StrokeShape="RoundRectangle 10"
+                    WidthRequest="169"
+                    MinimumHeightRequest="57"
+                    Margin="0,0,0,4"
+                    HorizontalOptions="Center">
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="White"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="Center"
+                       Margin="6" />
+            </Border>
+            <!-- Row 7: Random Number button and textbox -->
+            <Grid Grid.Row="7"
+                  ColumnDefinitions="150,*"
+                  VerticalOptions="Start">
+
+                <Button
+                    Grid.Column="0"
+                    Text="Random number"
+                    Command="{Binding RandomNumberCommand}"
+                    IsEnabled="True"
+                    BackgroundColor="#F4B183"
+                    TextColor="Black"
+                    BorderColor="#1F3864"
+                    BorderWidth="1"
+                    CornerRadius="0"
+                    Padding="0"
+                    HeightRequest="29"
+                    VerticalOptions="Start" />
+                <Border 
+                    Grid.Column="1"
+                    BackgroundColor="#FFE699"
+                    Stroke="#1F3864"
+                    WidthRequest="220"
+                    HeightRequest="29"
+                    Margin="0,6,0,0"
+                    HorizontalOptions="Center">
+                    <Label Text="{Binding RandomNumber}"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</ContentPage>
